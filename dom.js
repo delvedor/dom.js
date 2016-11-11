@@ -17,7 +17,7 @@ dom.get = function (selector) {
   return document.querySelector(selector)
 }
 
-dom.prototype.getParent = function (element) {
+dom.prototype.parent = function (element) {
   return this.element.parentNode
 }
 
