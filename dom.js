@@ -21,7 +21,7 @@ dom.prototype.getParent = function (element) {
   return this.element.parentNode
 }
 
-dom.prototype.remove = function(element) {
+dom.prototype.remove = function (element) {
   return this.element.parentNode.removeChild(this.element)
 }
 
