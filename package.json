@@ -1,0 +1,24 @@
+{
+  "name": "dom.js",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dom.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delvedor/dom.js.git"
+  },
+  "keywords": [],
+  "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/delvedor/dom.js/issues"
+  },
+  "homepage": "https://github.com/delvedor/dom.js#readme",
+  "devDependencies": {
+    "standard": "^8.5.0"
+  }
+}
