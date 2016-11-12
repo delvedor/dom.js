@@ -1,76 +1,75 @@
-/* eslint-disable new-cap */
 /* globals Image */
 
 'use strict'
 
 ;(function (global) {
-  function dom (selector) {
-    if (!(this instanceof dom)) {
-      return new dom(selector)
+  function Dom (selector) {
+    if (!(this instanceof Dom)) {
+      return new Dom(selector)
     }
     this.element = document.querySelector(selector)
     return this
   }
 
-  dom.get = function (selector) {
+  Dom.get = function (selector) {
     return document.querySelector(selector)
   }
 
-  dom.prototype.parent = function (element) {
+  Dom.prototype.parent = function (element) {
     return this.element.parentNode
   }
 
-  dom.prototype.remove = function (element) {
+  Dom.prototype.remove = function (element) {
     return this.element.parentNode.removeChild(this.element)
   }
 
-  dom.prototype.replace = function (newEle, oldEle) {
+  Dom.prototype.replace = function (newEle, oldEle) {
     this.element.replaceChild(newEle, oldEle)
     return this
   }
 
-  dom.prototype.append = function (element) {
+  Dom.prototype.append = function (element) {
     this.element.appendChild(element)
     return this
   }
 
-  dom.prototype.css = function (property, value) {
+  Dom.prototype.css = function (property, value) {
     this.element.style[property] = value
     return this
   }
 
-  dom.prototype.removeClass = function (className) {
+  Dom.prototype.removeClass = function (className) {
     this.element.classList.remove(className)
     return this
   }
 
-  dom.prototype.addClass = function (className) {
+  Dom.prototype.addClass = function (className) {
     this.element.classList.add(className)
     return this
   }
 
-  dom.prototype.classList = function () {
+  Dom.prototype.classList = function () {
     return this.element.classList
   }
 
-  dom.prototype.toggleClass = function (className) {
+  Dom.prototype.toggleClass = function (className) {
     this.element.classList.toggle(className)
     return this
   }
 
-  dom.prototype.removeChildren = function () {
+  Dom.prototype.removeChildren = function () {
     while (this.element.firstChild) {
       this.element.removeChild(this.element.firstChild)
     }
     return this
   }
 
-  dom.prototype.on = function (eventName, callback) {
+  Dom.prototype.on = function (eventName, callback) {
     this.element.addEventListener(eventName, callback.bind(this))
     return this
   }
 
-  dom.prototype.text = function (text) {
+  Dom.prototype.text = function (text) {
     if (!text) {
       return this.element.innerText
     }
@@ -78,7 +77,7 @@
     return this
   }
 
-  dom.prototype.html = function (html) {
+  Dom.prototype.html = function (html) {
     if (!html) {
       return this.element.innerHTML
     }
@@ -86,22 +85,22 @@
     return this
   }
 
-  dom.prototype.clone = function (element, deep) {
+  Dom.prototype.clone = function (element, deep) {
     return this.element.cloneNode(deep || false)
   }
 
-  dom.parse = function (html) {
+  Dom.parse = function (html) {
     var temp = document.createElement('TEMPLATE')
     temp.innerHTML = html
     return temp.content
   }
 
-  dom.image = function (path, alt) {
+  Dom.image = function (path, alt) {
     var image = new Image()
     image.src = path
     image.alt = alt || ''
     return image
   }
 
-  global.dom = dom
+  global.dom = Dom
 })(window)
