@@ -5,7 +5,7 @@
   "main": "dom.js",
   "scripts": {
     "lint": "standard",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint && tape test/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/delvedor/dom.js#readme",
   "devDependencies": {
-    "standard": "^8.5.0"
+    "jsdom": "^9.8.3",
+    "standard": "^8.5.0",
+    "tape": "^4.6.2"
   }
 }
