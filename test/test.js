@@ -19,6 +19,17 @@ function runTest (err, window) {
     t.ok(window.dom)
   })
 
+  test('should throw when selector is not a string/HTMLElement', t => {
+    t.plan(2)
+    try {
+      window.dom(42)
+      t.fail()
+    } catch (e) {
+      t.is(e.message, 'Selector must be a string or an HTMLElement')
+      t.pass()
+    }
+  })
+
   test('dom should generate a new instance', t => {
     t.plan(1)
     const div = window.dom('#select-me')
@@ -54,5 +65,13 @@ function runTest (err, window) {
     div.append(window.dom.get('#new'))
     t.notEqual(div.element.firstChild, null)
     t.equal(div.element.firstChild, document.querySelector('#append').firstChild)
+  })
+
+  test('dom.parent should return the parent element (instanceof Dom)', t => {
+    t.plan(3)
+    const parent = window.dom('#the-son').parent()
+    t.ok(parent instanceof window.dom)
+    t.deepEqual(parent.element, document.querySelector('#the-parent'))
+    t.notEqual(parent.element.innerHTML, document.querySelector('#the-son').innerHTML)
   })
 }
