@@ -1,4 +1,4 @@
-/* globals Image */
+/* globals Image, HTMLElement */
 
 'use strict'
 
@@ -7,16 +7,27 @@
     if (!(this instanceof Dom)) {
       return new Dom(selector)
     }
-    this.element = document.querySelector(selector)
+
+    if (typeof selector === 'string') {
+      this.element = document.querySelector(selector)
+    } else if (selector instanceof HTMLElement) {
+      this.element = selector
+    } else {
+      throw new TypeError('Selector must be a string or an HTMLElement')
+    }
+
     return this
   }
 
   Dom.get = function (selector) {
+    if (typeof selector !== 'string') {
+      throw new TypeError('Selector must be a string')
+    }
     return document.querySelector(selector)
   }
 
   Dom.prototype.parent = function (element) {
-    return this.element.parentNode
+    return new Dom(this.element.parentNode)
   }
 
   Dom.prototype.remove = function (element) {
