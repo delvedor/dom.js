@@ -19,13 +19,6 @@
     return this
   }
 
-  Dom.get = function (selector) {
-    if (typeof selector !== 'string') {
-      throw new TypeError('Selector must be a string')
-    }
-    return document.querySelector(selector)
-  }
-
   Dom.prototype.parent = function (element) {
     return new Dom(this.element.parentNode)
   }
@@ -60,7 +53,11 @@
   }
 
   Dom.prototype.classList = function () {
-    return this.element.classList
+    var classList = []
+    for (var ele in this.element.classList) {
+      classList.push(this.element.classList[ele])
+    }
+    return classList
   }
 
   Dom.prototype.toggleClass = function (className) {
@@ -82,9 +79,9 @@
 
   Dom.prototype.text = function (text) {
     if (!text) {
-      return this.element.innerText
+      return this.element.textContent
     }
-    this.element.innerText = text
+    this.element.textContent = text
     return this
   }
 
@@ -96,8 +93,15 @@
     return this
   }
 
-  Dom.prototype.clone = function (element, deep) {
+  Dom.prototype.clone = function (deep) {
     return this.element.cloneNode(deep || false)
+  }
+
+  Dom.get = function (selector) {
+    if (typeof selector !== 'string') {
+      throw new TypeError('Selector must be a string')
+    }
+    return document.querySelector(selector)
   }
 
   Dom.parse = function (html) {
