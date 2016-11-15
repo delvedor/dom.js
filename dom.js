@@ -37,8 +37,8 @@
     return this
   }
 
-  Dom.prototype.css = function (property, value) {
-    this.element.style[property] = value
+  Dom.prototype.css = function (rule) {
+    this.element.style[rule.split(':')[0].trim()] = rule.split(':')[1].trim()
     return this
   }
 
