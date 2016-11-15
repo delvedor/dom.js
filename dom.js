@@ -117,5 +117,28 @@
     return image
   }
 
+  Dom.prototype.fadeIn = function (element, display) {
+    this.element.style.opacity = 0
+    this.element.style.display = display || 'block';
+    (function fade () {
+      var val = parseFloat(this.element.style.opacity)
+      if (!((val += 0.1) > 1)) {
+        this.element.style.opacity = val
+        window.requestAnimationFrame(fade)
+      }
+    })()
+  }
+
+  Dom.prototype.fadeOut = function (element) {
+    this.element.style.opacity = 1;
+    (function fade () {
+      if ((this.element.style.opacity -= 0.1) < 0) {
+        this.element.style.display = 'none'
+      } else {
+        window.requestAnimationFrame(fade)
+      }
+    })()
+  }
+
   global.dom = Dom
 })(window)
