@@ -85,7 +85,7 @@ function runTest (err, window) {
   test('dom.css should update css of the given element', t => {
     t.plan(2)
     t.equal(document.querySelector('#style-me').style.color, 'red')
-    window.dom('#style-me').css('color', 'white')
+    window.dom('#style-me').css('color: white')
     t.equal(document.querySelector('#style-me').style.color, 'white')
   })
 
