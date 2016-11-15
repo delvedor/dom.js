@@ -1,4 +1,4 @@
-/* globals Image, HTMLElement */
+/* globals Image, HTMLElement, XMLHttpRequest */
 
 'use strict'
 
@@ -102,6 +102,27 @@
       throw new TypeError('Selector must be a string')
     }
     return document.querySelector(selector)
+  }
+
+  Dom.ajax = function (options) {
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        if (options.json) {
+          try {
+            return options.callback(null, JSON.parse(xhr.responseText))
+          } catch (err) {
+            return options.callback(err, null)
+          }
+        } else {
+          return options.callback(null, xhr.responseText)
+        }
+      } else {
+        options.callback({ err: 'Fetch failed', status: xhr.status, state: xhr.readyState }, null)
+      }
+    }
+    xhr.open(options.method, options.url)
+    xhr.send()
   }
 
   Dom.parse = function (html) {
