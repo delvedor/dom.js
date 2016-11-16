@@ -89,6 +89,28 @@ function runTest (err, window) {
     t.equal(document.querySelector('#style-me').style.color, 'white')
   })
 
+  test('dom.css multiline should update css of the given element', t => {
+    t.plan(4)
+    t.equal(document.querySelector('#style-me').style.color, 'white')
+    window.dom('#style-me').css(`
+      color: red;
+      font-size: 1em;
+      display: none;
+    `)
+    t.equal(document.querySelector('#style-me').style.color, 'red')
+    t.equal(document.querySelector('#style-me').style.fontSize, '1em')
+    t.equal(document.querySelector('#style-me').style.display, 'none')
+  })
+
+  test('dom.css multi-rule should update css of the given element', t => {
+    t.plan(4)
+    t.equal(document.querySelector('#style-me').style.color, 'red')
+    window.dom('#style-me').css('color: white; font-size: 1.2em; display: block;')
+    t.equal(document.querySelector('#style-me').style.color, 'white')
+    t.equal(document.querySelector('#style-me').style.fontSize, '1.2em')
+    t.equal(document.querySelector('#style-me').style.display, 'block')
+  })
+
   test('dom.addClass should add a class to the given element', t => {
     t.plan(2)
     t.deepEqual(document.querySelector('#class-test').classList, {})
