@@ -38,7 +38,18 @@
   }
 
   Dom.prototype.css = function (rule) {
-    this.element.style[rule.split(':')[0].trim()] = rule.split(':')[1].trim()
+    rule = rule.replace(/-([a-z])/ig, function (all, letter) {
+      return letter.toUpperCase()
+    })
+               .replace(/\n/g, '')
+               .split(';')
+               .filter(function (line) {
+                 return line.trim() !== ''
+               })
+    for (var i = 0; i < rule.length; i++) {
+      this.element.style[rule[i].split(':')[0].trim()] = rule[i].split(':')[1].trim()
+    }
+
     return this
   }
 
