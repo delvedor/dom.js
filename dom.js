@@ -19,11 +19,11 @@
     return this
   }
 
-  Dom.prototype.parent = function (element) {
+  Dom.prototype.parent = function () {
     return new Dom(this.element.parentNode)
   }
 
-  Dom.prototype.remove = function (element) {
+  Dom.prototype.remove = function () {
     return this.element.parentNode.removeChild(this.element)
   }
 
