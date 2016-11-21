@@ -1,4 +1,5 @@
 /* globals Image, HTMLElement, XMLHttpRequest */
+/* globals Image, HTMLElement, XMLHttpRequest, MutationObserver */
 
 'use strict'
 
@@ -106,6 +107,20 @@
 
   Dom.prototype.clone = function (deep) {
     return this.element.cloneNode(deep || false)
+  }
+
+  Dom.prototype.observe = function (options, callback) {
+    this.observer = new MutationObserver(callback.bind(this))
+    this.observer.observe(this.element, options)
+    return this
+  }
+
+  Dom.prototype.removeObserver = function () {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+    this.observer = null
+    return this
   }
 
   Dom.get = function (selector) {
