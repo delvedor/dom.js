@@ -1,4 +1,3 @@
-/* globals Image, HTMLElement, XMLHttpRequest */
 /* globals Image, HTMLElement, XMLHttpRequest, MutationObserver */
 
 'use strict'
