@@ -19,6 +19,11 @@ function runTest (err, window) {
     t.ok(window.dom)
   })
 
+  test('dom as "$" should exist in window object', t => {
+    t.plan(1)
+    t.ok(window.$)
+  })
+
   test('should throw when selector is not a string/HTMLElement', t => {
     t.plan(2)
     try {
@@ -141,6 +146,12 @@ function runTest (err, window) {
     t.deepEqual(['class1', 'class2', 'class3'], classList)
   })
 
+  test('dom.hasClass should find an element has the given class', t => {
+    t.plan(2)
+    t.true(window.dom('#has-class').hasClass('yes-it-has'))
+    t.false(window.dom('#has-class').hasClass('nope'))
+  })
+
   test('dom.removeChildren should remove all children', t => {
     t.plan(2)
     t.ok(document.querySelector('#father-with-children').innerHTML)
@@ -182,5 +193,41 @@ function runTest (err, window) {
     t.plan(1)
     var clone = window.dom('#clone-me').clone(true)
     t.deepEqual(clone, document.querySelector('#clone-me').cloneNode(true))
+  })
+
+  test('dom.value should get the value of the given element', t => {
+    t.plan(1)
+    t.equal(window.dom('#value').value(), 'some value')
+  })
+
+  test('dom.value should set the value of a given element', t => {
+    t.plan(1)
+    t.equal(window.dom('#value').value('stark').value(), 'stark')
+  })
+
+  test('dom.test should test with a regex the value of a given element', t => {
+    t.plan(1)
+    t.true(window.dom('#value').test(/stark/))
+  })
+
+  test('dom.attr should get the attribute of the given element', t => {
+    t.plan(1)
+    t.equal(window.dom('#attr').attr('type'), 'text')
+  })
+
+  test('dom.attr should set the attribute of a given element', t => {
+    t.plan(1)
+    t.equal(window.dom('#attr').attr('type', 'password').attr('type'), 'password')
+  })
+
+  test('dom.hasAttr should get the attribute of the given element', t => {
+    t.plan(1)
+    t.true(window.dom('#attr').hasAttr('type'))
+  })
+
+  test('dom.removeAttr should remove the attribute of the given element', t => {
+    t.plan(1)
+    window.dom('#attr').removeAttr('type')
+    t.false(window.dom('#attr').hasAttr('type'))
   })
 }
