@@ -76,6 +76,10 @@
     return this
   }
 
+  Dom.prototype.hasClass = function (className) {
+    return this.classList().indexOf(className) > -1
+  }
+
   Dom.prototype.removeChildren = function () {
     while (this.element.firstChild) {
       this.element.removeChild(this.element.firstChild)
@@ -85,6 +89,17 @@
 
   Dom.prototype.on = function (eventName, callback) {
     this.element.addEventListener(eventName, callback.bind(this))
+    return this
+  }
+
+  Dom.prototype.off = function (eventName, callback) {
+    if (eventName && callback) {
+      this.element.removeEventListener(eventName, callback)
+    } else {
+      var newEle = this.clone(true)
+      this.parent().replace(newEle, this.element)
+    }
+
     return this
   }
 
@@ -102,6 +117,35 @@
     }
     this.element.innerHTML = html
     return this
+  }
+
+  Dom.prototype.value = function (value) {
+    if (typeof value !== 'string') {
+      return this.element.value
+    }
+    this.element.value = value
+    return this
+  }
+
+  Dom.prototype.attr = function (name, value) {
+    if (!value) {
+      return this.element.getAttribute(name)
+    }
+    this.element.setAttribute(name, value)
+    return this
+  }
+
+  Dom.prototype.removeAttr = function (name) {
+    this.element.removeAttribute(name)
+    return this
+  }
+
+  Dom.prototype.hasAttr = function (name) {
+    return this.element.hasAttribute(name)
+  }
+
+  Dom.prototype.test = function (regex) {
+    return regex.test(this.element.value)
   }
 
   Dom.prototype.clone = function (deep) {
@@ -163,5 +207,45 @@
     return image
   }
 
+  Dom.prototype.swipe = function (callback) {
+    this.element.addEventListener('touchstart', handleTouchStart, false)
+    this.element.addEventListener('touchmove', handleTouchMove, false)
+    callback = callback.bind(this)
+
+    var xDown = null
+    var yDown = null
+
+    function handleTouchStart (evt) {
+      xDown = evt.touches[0].clientX
+      yDown = evt.touches[0].clientY
+    }
+
+    function handleTouchMove (evt) {
+      if (!xDown || !yDown) {
+        return
+      }
+      var direction = null
+
+      var xUp = evt.touches[0].clientX
+      var yUp = evt.touches[0].clientY
+
+      var xDiff = xDown - xUp
+      var yDiff = yDown - yUp
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        direction = xDiff > 0 ? 'left' : 'right'
+      } else {
+        direction = yDiff > 0 ? 'up' : 'down'
+      }
+
+      xDown = null
+      yDown = null
+      callback(direction)
+    }
+
+    return this
+  }
+
   global.dom = Dom
+  global.$ = global.$ || Dom
 })(window)
