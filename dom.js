@@ -176,7 +176,7 @@
   Dom.ajax = function (options) {
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      if (xhr.readyState === XMLHttpRequest.DONE && (options.local ? xhr.status === 200 || xhr.status === 0 : xhr.status === 200)) {
         if (options.json) {
           try {
             return options.callback(null, JSON.parse(xhr.responseText))
