@@ -230,4 +230,22 @@ function runTest (err, window) {
     window.dom('#attr').removeAttr('type')
     t.false(window.dom('#attr').hasAttr('type'))
   })
+
+  test('If the element does not exist, element will be a document fragment', t => {
+    t.plan(2)
+    var ele = window.dom('not-existing')
+    t.is(typeof ele.element, 'object') // eslint-disable-line
+    t.notEqual(ele.element, null)
+  })
+
+  test('Should not throw on element not defined', t => {
+    t.plan(1)
+    var ele = window.dom('not-existing')
+    try {
+      ele.on('click', console.log)
+      t.pass('Must not throw')
+    } catch (e) {
+      t.fail('Must not throw')
+    }
+  })
 }
