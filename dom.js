@@ -16,6 +16,11 @@
       throw new TypeError('Selector must be a string or an HTMLElement')
     }
 
+    if (this.element === null) {
+      console.log('Dom.js: The element \'' + selector + '\' you selected does not exist!')
+      this.element = document.createDocumentFragment()
+    }
+
     return this
   }
 
