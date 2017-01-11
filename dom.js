@@ -212,6 +212,10 @@
     return image
   }
 
+  Dom.all = function (selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector))
+  }
+
   Dom.prototype.swipe = function (callback) {
     this.element.addEventListener('touchstart', handleTouchStart, false)
     this.element.addEventListener('touchmove', handleTouchMove, false)

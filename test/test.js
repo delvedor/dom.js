@@ -248,4 +248,11 @@ function runTest (err, window) {
       t.fail('Must not throw')
     }
   })
+
+  test('dom.all shuold return an array of HTML elements', t => {
+    t.plan(2)
+    var elements = window.dom.all('.all')
+    t.ok(Array.isArray(elements))
+    t.is(elements.length, 5)
+  })
 }
