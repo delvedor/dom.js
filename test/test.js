@@ -255,4 +255,24 @@ function runTest (err, window) {
     t.ok(Array.isArray(elements))
     t.is(elements.length, 5)
   })
+
+  test('dom.children should return an array of children (as dom objects)', t => {
+    t.plan(5)
+    var children = window.dom('#father').children()
+    t.ok(Array.isArray(children))
+    t.is(children.length, 3)
+    for (var i = 0; i < children.length; i++) {
+      t.ok(children[i] instanceof window.dom)
+    }
+  })
+
+  test('dom.children should return an array of children (as raw elements)', t => {
+    t.plan(5)
+    var children = window.dom('#father').children({ rawElements: true })
+    t.ok(Array.isArray(children))
+    t.is(children.length, 3)
+    for (var i = 0; i < children.length; i++) {
+      t.notOk(children[i] instanceof window.dom)
+    }
+  })
 }
