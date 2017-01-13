@@ -1,5 +1,7 @@
 /* globals Image, HTMLElement, XMLHttpRequest, MutationObserver */
 
+// https://github.com/delvedor/dom.js
+
 'use strict'
 
 ;(function (global) {
@@ -85,6 +87,15 @@
     return this.classList().indexOf(className) > -1
   }
 
+  Dom.prototype.children = function (options) {
+    var children = Array.prototype.slice.call(this.element.children)
+    if (options && options.rawElements) return children
+    for (var i = 0, len = children.length; i < len; i++) {
+      children[i] = new Dom(children[i])
+    }
+    return children
+  }
+
   Dom.prototype.removeChildren = function () {
     while (this.element.firstChild) {
       this.element.removeChild(this.element.firstChild)
@@ -104,8 +115,6 @@
       var newEle = this.clone(true)
       this.parent().replace(newEle, this.element)
     }
-
-    return this
   }
 
   Dom.prototype.text = function (text) {
