@@ -23,6 +23,8 @@
       this.element = document.createDocumentFragment()
     }
 
+    this.element.domLibEventHandlers = this.element.domLibEventHandlers || {}
+
     return this
   }
 
@@ -103,18 +105,46 @@
     return this
   }
 
-  Dom.prototype.on = function (eventName, callback) {
-    this.element.addEventListener(eventName, callback.bind(this))
+  Dom.prototype.on = function (eventName, callback, useCapture) {
+    this.element.addEventListener(eventName, callback.bind(this), useCapture || false)
+    this.element.domLibEventHandlers[eventName] = this.element.domLibEventHandlers[eventName] || []
+    this.element.domLibEventHandlers[eventName].push(callback)
     return this
   }
 
   Dom.prototype.off = function (eventName, callback) {
     if (eventName && callback) {
       this.element.removeEventListener(eventName, callback)
+    } else if (eventName) {
+      if (!this.element.domLibEventHandlers[eventName]) return
+      for (var i = 0; i < this.element.domLibEventHandlers[eventName].length; i++) {
+        this.element.removeEventListener(eventName, this.element.domLibEventHandlers[eventName][i])
+        delete this.element.domLibEventHandlers[eventName][i]
+      }
     } else {
       var newEle = this.clone(true)
       this.parent().replace(newEle, this.element)
     }
+  }
+
+  Dom.prototype.is = function (what) {
+    var not = what.split(' ').length === 2
+    what = what.split(' ')[what.split(' ').length - 1]
+    var result = false
+    switch (what) {
+      case 'focus':
+        result = this.element === document.activeElement
+        break
+      case 'blur':
+        result = this.element !== document.activeElement
+        break
+      case 'visible':
+        result = this.element.style.display !== 'none'
+        break
+      default:
+        throw new Error('"' + what + '" check is not yet supported, make a PR! :)')
+    }
+    return not ? !result : result
   }
 
   Dom.prototype.text = function (text) {
