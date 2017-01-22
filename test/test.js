@@ -275,4 +275,27 @@ function runTest (err, window) {
       t.notOk(children[i] instanceof window.dom)
     }
   })
+
+  test('dom.is should test the given property', t => {
+    t.plan(3)
+    var ele = window.dom('#is')
+    t.false(ele.is('focus'))
+    t.true(ele.is('blur'))
+    t.true(ele.is('visible'))
+  })
+
+  test('dom.is("not") should test the given property', t => {
+    t.plan(3)
+    var ele = window.dom('#is')
+    t.true(ele.is('not focus'))
+    t.false(ele.is('not blur'))
+    t.false(ele.is('not visible'))
+  })
+
+  test('dom.on should add an event listener and a store object to the element', t => {
+    t.plan(2)
+    window.dom('#event').on('click', console.log)
+    t.is(typeof window.dom('#event').element.domLibEventHandlers, 'object')
+    t.true(Array.isArray(window.dom('#event').element.domLibEventHandlers['click']))
+  })
 }
