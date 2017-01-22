@@ -72,6 +72,9 @@ At the moment here are just listed the APIs, if you want to see how they work, j
 <a href="#"><code>dom(element)<b>.off(eventName, callback)</b></code></a>  
 
 
+<a href="#"><code>dom(element)<b>.is(what)</b></code></a>  
+
+
 <a href="#"><code>dom(element)<b>.text(text)</b></code></a>  
 
 
