@@ -197,6 +197,10 @@
   }
 
   Dom.prototype.observe = function (options, callback) {
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
     this.observer = new MutationObserver(callback.bind(this))
     this.observer.observe(this.element, options)
     return this
