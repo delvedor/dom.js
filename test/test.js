@@ -298,4 +298,25 @@ function runTest (err, window) {
     t.is(typeof window.dom('#event').element.domLibEventHandlers, 'object')
     t.true(Array.isArray(window.dom('#event').element.domLibEventHandlers['click']))
   })
+
+  test('dom.collapsible should return a function that return an instance of dom', t => {
+    t.plan(5)
+    var collapsible = window.dom('#collapsible').collapsible()
+    t.is(typeof collapsible.expand, 'function')
+    t.is(typeof collapsible.collapse, 'function')
+
+    t.ok(collapsible.expand() instanceof window.dom)
+    t.ok(collapsible.collapse() instanceof window.dom)
+
+    t.is(collapsible.expand().element.offsetHeight, window.dom.get('#collapsible').offsetHeight)
+  })
+
+  test('dom.collapsible can accept a custom height instead of the offsetHeight', t => {
+    t.plan(2)
+    var collapsible = window.dom('#collapsible').collapsible({
+      height: 150
+    })
+    t.is(collapsible.expand().element.style.height, '150px')
+    t.is(collapsible.collapse().collapsibleHeight, 150)
+  })
 }
