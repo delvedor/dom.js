@@ -107,6 +107,11 @@ At the moment here are just listed the APIs, if you want to see how they work, j
 
 <a href="#"><code>dom(element)<b>.swipe(callback)</b></code></a>  
 
+
+<a href="#"><code>dom(element)<b>.collapsible(options)</b></code></a>  
+<a href="#"><code>|---<b> .expand()</b></code></a>  
+<a href="#"><code>|---<b> .collapse()</b></code></a>  
+
 ### Utils
 
 <a href="#"><code>dom<b>.get(selector)</b></code></a>  
