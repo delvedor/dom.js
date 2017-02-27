@@ -298,6 +298,29 @@
     return this
   }
 
+  Dom.prototype.collapsible = function (opts) {
+    opts = opts || {}
+    opts.time = opts.time || 0.5
+    this.collapsibleHeight = opts.height || this.element.offsetHeight
+    this.css('display: block; height: 0; line-height:0; overflow: hidden; transition: height ' + opts.time + 's, line-height ' + opts.time + 's')
+
+    return {
+      expand: expand.bind(this),
+      collapse: collapse.bind(this)
+    }
+
+    function expand () {
+      this.css('height:' + this.collapsibleHeight + 'px; line-height: initial')
+      return this
+    }
+
+    function collapse () {
+      this.collapsibleHeight = opts.height || this.element.offsetHeight
+      this.css('height: 0')
+      return this
+    }
+  }
+
   global.dom = Dom
   global.$ = global.$ || Dom
 })(window)
