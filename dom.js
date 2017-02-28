@@ -301,8 +301,9 @@
   Dom.prototype.collapsible = function (opts) {
     opts = opts || {}
     opts.time = opts.time || 0.5
+    opts.minHeight = opts.minHeight || 0
     this.collapsibleHeight = opts.height || this.element.offsetHeight
-    this.css('display: block; height: 0; line-height:0; overflow: hidden; transition: height ' + opts.time + 's, line-height ' + opts.time + 's')
+    this.css('display: block; height: ' + opts.minHeight + 'px; line-height:' + (opts.minHeight ? 'initial' : 0) + 'px; overflow: hidden; transition: height ' + opts.time + 's, line-height ' + opts.time + 's')
 
     return {
       expand: expand.bind(this),
@@ -316,7 +317,7 @@
 
     function collapse () {
       this.collapsibleHeight = opts.height || this.element.offsetHeight
-      this.css('height: 0')
+      this.css('height: ' + opts.minHeight + 'px')
       return this
     }
   }
