@@ -302,8 +302,9 @@
     opts = opts || {}
     opts.time = opts.time || 0.5
     opts.minHeight = opts.minHeight || 0
+    opts.transitionTiming = opts.transitionTiming || 'ease'
     this.collapsibleHeight = opts.height || this.element.offsetHeight
-    this.css('display: block; height: ' + opts.minHeight + 'px; line-height:' + (opts.minHeight ? 'initial' : 0) + 'px; overflow: hidden; transition: height ' + opts.time + 's, line-height ' + opts.time + 's')
+    this.css('display: block; height: ' + opts.minHeight + 'px; line-height:' + (opts.minHeight ? 'initial' : 0) + 'px; overflow: hidden; transition: height ' + opts.time + 's, line-height ' + opts.time + 's; transition-timing-function:' + opts.transitionTiming)
 
     return {
       expand: expand.bind(this),
